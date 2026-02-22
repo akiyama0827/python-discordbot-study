@@ -22,25 +22,25 @@ class sendingOhaasa(commands.Cog):
         #if now.hour==7 and now.minute<=15: ### 테스트 시 조건 True로 수정
         if True:
         # update horo_text_list
-        os.system("python3 crawllingOhaasa.py")
+            os.system("python3 crawllingOhaasa.py")
 
-        embed = discord.Embed(
-            title=datetime.strftime(now, '%Y년 %m월 %d일 오하아사 순위'),
-            color=discord.Color.gold(),
-            timestamp=now,
-            url='https://www.asahi.co.jp/ohaasa/week/horoscope/'
-        )
-        for i in range(len(horo_text_list)):
-            embed.add_field(name=f"{horo_text_list[i][0]}위- {horo_text_list[i][1]}",
-                            value="",
-                            inline=False)
+            embed = discord.Embed(
+                title=datetime.strftime(now, '%Y년 %m월 %d일 오하아사 순위'),
+                color=discord.Color.gold(),
+                timestamp=now,
+                url='https://www.asahi.co.jp/ohaasa/week/horoscope/'
+            )
+            for i in range(len(horo_text_list)):
+                embed.add_field(name=f"{horo_text_list[i][0]}위- {horo_text_list[i][1]}",
+                                value="",
+                                inline=False)
 
-        embed.set_author(name="오하아사 봇")
-        embed.set_thumbnail(url='https://www.asahi.co.jp/ohaasa/week/horoscope/img/ttl_horoscope.png')
+            embed.set_author(name="오하아사 봇")
+            embed.set_thumbnail(url='https://www.asahi.co.jp/ohaasa/week/horoscope/img/ttl_horoscope.png')
 
-        for channel_id in CHANNEL_LIST:
-            channel = bot.get_channel(channel_id)
-            await channel.send(embed=embed, view=SelectView())
+            for channel_id in CHANNEL_LIST:
+                channel = bot.get_channel(channel_id)
+                await channel.send(embed=embed, view=SelectView())
 
 async def setup(bot):
     await bot.add_cog(sendingOhaasa(bot))
