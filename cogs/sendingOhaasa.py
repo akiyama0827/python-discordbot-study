@@ -9,7 +9,7 @@ import crawllingOhaasa
 horo_text_list = crawllingOhaasa.horo_text_list
 
 load_dotenv()
-CHANNEL_LIST = os.getenv("OHAASA_CHANNEL")
+CHANNEL_LIST = list(map(int, os.getenv("OHAASA_CHANNEL").lstrip('[').rstrip(']').split(',')))
 
 # 오하아사 메시지 보내는 함수
 # 표시해둔 줄은 특정 시간에 메시지를 보내는 함수이니 코드 테스트 시 수정할 것
