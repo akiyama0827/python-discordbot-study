@@ -16,7 +16,7 @@ async def load_extensions():
         if filename.endswith('.py'):
             extension = 'cogs.' + filename[:-3]
             print(f"{extension} 모듈을 불러왔습니다.")
-            await bot.load_extensions(extension)
+            await bot.load_extension(extension)
 
 @bot.event
 async def on_ready():
