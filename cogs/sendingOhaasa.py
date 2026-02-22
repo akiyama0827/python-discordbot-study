@@ -41,7 +41,7 @@ class sendingOhaasa(commands.Cog):
             embed.set_thumbnail(url='https://www.asahi.co.jp/ohaasa/week/horoscope/img/ttl_horoscope.png')
 
             for channel_id in CHANNEL_LIST:
-                channel = bot.get_channel(channel_id)
+                channel = self.bot.get_channel(channel_id)
                 await channel.send(embed=embed, view=SelectView())
 
 async def setup(bot):
