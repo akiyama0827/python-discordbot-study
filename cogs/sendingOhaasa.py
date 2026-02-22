@@ -3,6 +3,7 @@ from discord import app_commands
 from discord.ext import tasks, commands
 from datetime import datetime
 from dotenv import load_dotenv
+from pytz import timezone
 
 import crawllingOhaasa
 horo_text_list = crawllingOhaasa.horo_text_list
