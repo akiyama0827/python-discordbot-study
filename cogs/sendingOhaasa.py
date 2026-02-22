@@ -15,8 +15,9 @@ CHANNEL_LIST = os.getenv("OHAASA_CHANNEL")
 class sendingOhaasa(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.ohaasa_message.start()
     
-    @tasks.loop(minutes = 2)
+    @tasks.loop(minutes = 1)
     async def ohaasa_message():
         now = datetime.now(timezone('Asia/Seoul'))
         #if now.hour==7 and now.minute<=15: ### 테스트 시 조건 True로 수정
