@@ -18,7 +18,7 @@ class sendingOhaasa(commands.Cog):
         self.ohaasa_message.start()
     
     @tasks.loop(minutes = 1)
-    async def ohaasa_message():
+    async def ohaasa_message(self):
         now = datetime.now(timezone('Asia/Seoul'))
         #if now.hour==7 and now.minute<=15: ### 테스트 시 조건 True로 수정
         if True:
