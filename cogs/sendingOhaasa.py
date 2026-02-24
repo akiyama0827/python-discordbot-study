@@ -14,13 +14,16 @@ CHANNEL_ID = 1473674730212032685
 class sendingOhaasa(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.is_on_ohaasa = False
     
     @app_commands.command(name='ohaasa', description="오하아사 전송 기능을 끄거나 켭니다")
     async def ohaasa(self, interaction: discord.Interaction):
         if not self.is_on_ohaasa:
+            self.is_on_ohaasa = True
             await interaction.response.send_message("오하아사 기능을 켭니다.")
             self.ohaasa_message.start()
         else:
+            self.is_on_ohaasa = False
             await interaction.response.send_message("오하아사 기능을 끕니다.")
             self.ohaasa_message.stop()
 
