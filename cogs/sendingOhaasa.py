@@ -16,7 +16,7 @@ class sendingOhaasa(commands.Cog):
         self.bot = bot
     
     @app_commands.command(name='ohaasa', description="오하아사 전송 기능을 끄거나 켭니다")
-    async def ohaasa(interaction: discord.Interaction):
+    async def ohaasa(self, interaction: discord.Interaction):
         if not self.is_on_ohaasa:
             await interaction.response.send_message("오하아사 기능을 켭니다.")
             self.ohaasa_message.start()
