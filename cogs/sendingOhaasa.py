@@ -2,14 +2,12 @@ import os, discord
 from discord import app_commands
 from discord.ext import tasks, commands
 from datetime import datetime
-from dotenv import load_dotenv
 from pytz import timezone
 
 import crawllingOhaasa
 horo_text_list = crawllingOhaasa.horo_text_list
 
-load_dotenv()
-CHANNEL_LIST = list(map(int, os.getenv("OHAASA_CHANNEL").lstrip('[').rstrip(']').split(',')))
+CHANNEL_ID = 1473674730212032685
 
 # 오하아사 메시지 보내는 함수
 # 표시해둔 줄은 특정 시간에 메시지를 보내는 함수이니 코드 테스트 시 수정할 것
@@ -40,10 +38,8 @@ class sendingOhaasa(commands.Cog):
             embed.set_author(name="오하아사 봇")
             embed.set_thumbnail(url='https://www.asahi.co.jp/ohaasa/week/horoscope/img/ttl_horoscope.png')
 
-            for channel_id in CHANNEL_LIST:
-                print(channel_id)
-                channel = self.bot.get_channel(channel_id)
-                await channel.send(embed=embed, view=SelectView())
+            channel = self.bot.get_channel(CHANNEL_ID)
+            await channel.send(embed=embed, view=SelectView())
 
 async def setup(bot):
     await bot.add_cog(sendingOhaasa(bot))
