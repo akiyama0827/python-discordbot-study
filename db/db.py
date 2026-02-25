@@ -1,7 +1,7 @@
 import sqlite3, os.path
 
-DB_PATH = './data/database.db'
-BUILD_PATH = './data/build.sql'
+DB_PATH = '../data/database.db'
+BUILD_PATH = '../data/build.sql'
 
 con = sqlite3.connect(DB_PATH)
 cur = con.cursor()
