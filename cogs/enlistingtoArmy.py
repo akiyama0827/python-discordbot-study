@@ -24,4 +24,4 @@ class EnlistingtoArmy(commands.Cog):
                 await interaction.response.send_message(f"등록 중에 오류가 발생했습니다: {e}")
         
 async def setup(bot):
-    await bot.add_cog(Player(bot))
+    await bot.add_cog(EnlistingtoArmy(bot))
