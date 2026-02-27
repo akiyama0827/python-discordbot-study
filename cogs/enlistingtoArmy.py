@@ -8,7 +8,7 @@ class EnlistingtoArmy(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name='병역정보등록', description="군생활 정보를 등록합니다.")
-    @app_commands.describe(입대일="입영일자(ex: 250819)", 전역일="전열일자(ex: 270218", 군별="육군/공군/해군")
+    @app_commands.describe(입대일="입영일자\(ex: 250819\)", 전역일="전역일자\(ex: 270218\)", 군별="육군/공군/해군")
     async def mili_register(self, interaction: discord.Interaction, 입대일: str, 전역일: str, 군별: str):
         user_id = interaction.user.id
         enlistment_date = f"20{입대일[0:2]}-{입대일[2:4]}-{입대일[4:6]}"
