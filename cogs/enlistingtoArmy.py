@@ -15,7 +15,7 @@ class EnlistingtoArmy(commands.Cog):
         discharge_date = f"20{전역일[0:2]}-{전역일[2:4]}-{전역일[4:6]}"
         branch = 군별
         try: # 플레이어 등록 시도
-            db.execute("INSERT INTO player (user_id, enlistment_date, discharge_date, branch) VALUES (?, ?, ?, ?)", (user_id, enlistment_date, discharge_date, branch))
+            db.execute("INSERT INTO player VALUES (?, ?, ?, ?)", (user_id, enlistment_date, discharge_date, branch))
             await interaction.response.send_message("병역정보가 등록되었습니다.")
         except sqlite3.IntegrityError as e:
             if "UNIQUE constraint failed" in str(e):
