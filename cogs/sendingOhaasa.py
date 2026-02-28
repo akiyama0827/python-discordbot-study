@@ -13,8 +13,6 @@ def updateChannel():
     channels = db.recordAllItem("guild", "ohaasa_channel")
     for channel in channels:
         channel_list.append(channel[0])
-        print(f"appending {type(channel[0])}")
-    print(channel_list)
 
 channel_list = []
 updateChannel()
