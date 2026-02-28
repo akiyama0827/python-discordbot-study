@@ -32,7 +32,8 @@ class SendingOhaasa(commands.Cog):
             await interaction.response.send_message("본 채널에 오하아사를 전송하도록 설정했습니다.")
         except sqlite3.IntegrityError as e:
             if "UNIQUE constraint failed" in str(e):
-                await interaction.response.send_message("이미 등록된 서버입니다.")
+                db.execute("UPDATE guild SET ohaasa_channel = ? WHERE guild_id = ?", (interaction.channel_id, interaction.guild_id))
+                await interaction.response.send_message("본 채널에 오하아사를 전송하도록 설정했습니다.")
             else:
                 await interaction.response.send_message(f"등록 중에 오류가 발생했습니다: {e}")
     
