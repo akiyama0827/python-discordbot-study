@@ -29,3 +29,16 @@ def scriptexec(path):
 def execute(command, values):
     cur.execute(command, values)
     return cur.rowcount
+
+def field(command, *values):
+    cur.execute(command, values)
+    fetch = cur.fetchone()
+    return fetch[0] if fetch else None
+
+def record(command, *values):
+    cur.execute(command, values)
+    return cur.fetchone()
+
+def recordAllItem(var_from, values):
+    cur.execute(f"SELECT {values} FROM {var_from}")
+    return cur.fetchall()

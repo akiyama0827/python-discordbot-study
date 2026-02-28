@@ -1,13 +1,21 @@
-import os, discord
+import os, discord, sqlite3
 from discord import app_commands
 from discord.ext import tasks, commands
 from datetime import datetime
 from pytz import timezone
+from db import db
 
 import crawllingOhaasa
 horo_text_list = crawllingOhaasa.horo_text_list
 
-CHANNEL_ID = 1473674730212032685
+def updateChannel():
+    channel_list.clear()
+    channels = db.recordAll("guild", "ohaasa_channel")
+    for channel in channels:
+        channel_list.append(channel)
+
+channel_list = []
+updateChannel()
 
 # 오하아사 메시지 보내는 함수
 # 표시해둔 줄은 특정 시간에 메시지를 보내는 함수이니 코드 테스트 시 수정할 것
@@ -15,9 +23,21 @@ class SendingOhaasa(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.is_on_ohaasa = False
+
+    @app_commands.command(name='enlistChannel', description="오하아사를 본 채널에 전송하도록 설정합니다")
+    async def enlistChannel(self, interaction: discord.Interaction):
+        try:
+            db.execute("INSERT INTO guild (guild_id, ohaasa_channel) VALUES(?, ?)", (interaction.guild_id, interaction.channel_id))
+            updateChannel()
+            await interaction.response.send_message("본 채널에 오하아사를 전송하도록 설정했습니다.")
+        except sqlite3.IntegrityError as e:
+            if "UNIQUE constraint failed" in str(e):
+                await interaction.response.send_message("이미 등록된 서버입니다.")
+            else:
+                await interaction.response.send_message(f"등록 중에 오류가 발생했습니다: {e}")
     
-    @app_commands.command(name='ohaasa', description="오하아사 전송 기능을 끄거나 켭니다")
-    async def ohaasa(self, interaction: discord.Interaction):
+    @app_commands.command(name='toggleOhaasa', description="오하아사 전송 기능을 끄거나 켭니다")
+    async def toggleOhaasa(self, interaction: discord.Interaction):
         if not self.is_on_ohaasa:
             self.is_on_ohaasa = True
             await interaction.response.send_message("오하아사 기능을 켭니다.")
@@ -49,8 +69,9 @@ class SendingOhaasa(commands.Cog):
             embed.set_author(name="오하아사 봇")
             embed.set_thumbnail(url='https://www.asahi.co.jp/ohaasa/week/horoscope/img/ttl_horoscope.png')
 
-            channel = self.bot.get_channel(CHANNEL_ID)
-            await channel.send(embed=embed, view=SelectView())
+            for channel_id in channel_list:
+                channel = self.bot.get_channel(channel_id)
+                await channel.send(embed=embed, view=SelectView())
 
 import crawllingOhaasa
 horo_text_list = crawllingOhaasa.horo_text_list

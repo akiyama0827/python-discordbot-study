@@ -4,3 +4,9 @@ CREATE TABLE IF NOT EXISTS player (
     discharge_date TEXT,
     branch TEXT
 );
+
+CREATE TABLE IF NOT EXISTS guild (
+    guild_id INTEGER PRIMARY KEY,
+    ohaasa_channel INTEGER,
+    celebrate_channel INTEGER
+)
