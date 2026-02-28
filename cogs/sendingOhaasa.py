@@ -24,8 +24,8 @@ class SendingOhaasa(commands.Cog):
         self.bot = bot
         self.is_on_ohaasa = False
 
-    @app_commands.command(name='enlistChannel', description="오하아사를 본 채널에 전송하도록 설정합니다")
-    async def enlistChannel(self, interaction: discord.Interaction):
+    @app_commands.command(name='enlist_channel', description="오하아사를 본 채널에 전송하도록 설정합니다")
+    async def enlist_channel(self, interaction: discord.Interaction):
         try:
             db.execute("INSERT INTO guild (guild_id, ohaasa_channel) VALUES(?, ?)", (interaction.guild_id, interaction.channel_id))
             updateChannel()
@@ -36,8 +36,8 @@ class SendingOhaasa(commands.Cog):
             else:
                 await interaction.response.send_message(f"등록 중에 오류가 발생했습니다: {e}")
     
-    @app_commands.command(name='toggleOhaasa', description="오하아사 전송 기능을 끄거나 켭니다")
-    async def toggleOhaasa(self, interaction: discord.Interaction):
+    @app_commands.command(name='toggle_ohaasa', description="오하아사 전송 기능을 끄거나 켭니다")
+    async def toggle_ohaasa(self, interaction: discord.Interaction):
         if not self.is_on_ohaasa:
             self.is_on_ohaasa = True
             await interaction.response.send_message("오하아사 기능을 켭니다.")
