@@ -10,7 +10,7 @@ horo_text_list = crawllingOhaasa.horo_text_list
 
 def updateChannel():
     channel_list.clear()
-    channels = db.recordAll("guild", "ohaasa_channel")
+    channels = db.recordAllItem("guild", "ohaasa_channel")
     for channel in channels:
         channel_list.append(channel)
 
