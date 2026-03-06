@@ -7,8 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 import time
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
 
 import os
 from dotenv import load_dotenv
@@ -32,9 +30,7 @@ driver = webdriver.Chrome(service=service, options=op)
 
 # 테스트: Google 페이지 열기
 url = "https://www.asahi.co.jp/ohaasa/week/horoscope/"
-loop = asyncio.get_running_loop()
-with ThreadPoolExecutor() as pool:
-    driver.get(url)
+driver.get(url)
 time.sleep(3)
 horo_ul = driver.find_element(By.CLASS_NAME, "oa_horoscope_list")
 horo_li = horo_ul.find_elements(By.TAG_NAME, "li")
