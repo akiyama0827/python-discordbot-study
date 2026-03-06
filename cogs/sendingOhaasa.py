@@ -27,13 +27,16 @@ class SendingOhaasa(commands.Cog):
     @app_commands.command(name='enlist_channel', description="오하아사를 본 채널에 전송하도록 설정합니다")
     async def enlist_channel(self, interaction: discord.Interaction):
         try:
-            db.execute("INSERT INTO guild (guild_id, ohaasa_channel) VALUES(?, ?)", (interaction.guild_id, interaction.channel_id))
-            updateChannel()
-            await interaction.response.send_message("본 채널에 오하아사를 전송하도록 설정했습니다.")
-        except sqlite3.IntegrityError as e:
-            if "UNIQUE constraint failed" in str(e):
+            if db.execute(f"SELECT * FROM guild WHERE guild_id={interaction.guild_id}"):
                 db.execute("UPDATE guild SET ohaasa_channel = ? WHERE guild_id = ?", (interaction.channel_id, interaction.guild_id))
                 await interaction.response.send_message("본 채널에 오하아사를 전송하도록 변경했습니다.")
+            else:
+                db.execute("INSERT INTO guild (guild_id, ohaasa_channel) VALUES(?, ?)", (interaction.guild_id, interaction.channel_id))
+                updateChannel()
+                await interaction.response.send_message("본 채널에 오하아사를 전송하도록 설정했습니다.")    
+        except sqlite3.IntegrityError as e:
+            if "UNIQUE constraint failed" in str(e):
+                await interaction.response.send_message(f"변경 중에 오류가 발생했습니다: {e}")
             else:
                 await interaction.response.send_message(f"등록 중에 오류가 발생했습니다: {e}")
     
