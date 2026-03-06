@@ -31,6 +31,7 @@ class SendingOhaasa(commands.Cog):
             if db.field("SELECT guild_id FROM guild WHERE guild_id = ?", interaction.guild_id) != None:
                 print("updating...")
                 db.execute("UPDATE guild SET ohaasa_channel = ? WHERE guild_id = ?", (interaction.channel_id, interaction.guild_id))
+                updateChannel()
                 await interaction.response.send_message("본 채널에 오하아사를 전송하도록 변경했습니다.")
             else:
                 db.execute("INSERT INTO guild (guild_id, ohaasa_channel) VALUES(?, ?)", (interaction.guild_id, interaction.channel_id))
