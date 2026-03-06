@@ -27,8 +27,9 @@ class SendingOhaasa(commands.Cog):
     @app_commands.command(name='enlist_channel', description="오하아사를 본 채널에 전송하도록 설정합니다")
     async def enlist_channel(self, interaction: discord.Interaction):
         try:
-            print(db.field("SELECT guild_id FROM guild WHERE guild_id = ?", (interaction.channel_id)))
-            if db.field("SELECT guild_id FROM guild WHERE guild_id = ?", (interaction.channel_id)) != None:
+            print(db.field("SELECT guild_id FROM guild WHERE guild_id = ?", interaction.channel_id))
+            if db.field("SELECT guild_id FROM guild WHERE guild_id = ?", interaction.channel_id) != None:
+                print("updating...")
                 db.execute("UPDATE guild SET ohaasa_channel = ? WHERE guild_id = ?", (interaction.channel_id, interaction.guild_id))
                 await interaction.response.send_message("본 채널에 오하아사를 전송하도록 변경했습니다.")
             else:
