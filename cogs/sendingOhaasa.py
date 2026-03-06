@@ -52,7 +52,7 @@ class SendingOhaasa(commands.Cog):
             await interaction.response.send_message("오하아사 기능을 끕니다.")
             self.ohaasa_message.stop()
 
-    @tasks.loop(minutes = 1)
+    @tasks.loop(minutes = 2)
     async def ohaasa_message(self):
         now = datetime.now(timezone('Asia/Seoul'))
         #if now.hour==7 and now.minute<=15: ### 테스트 시 조건 True로 수정
